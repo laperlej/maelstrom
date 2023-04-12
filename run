@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+case $1 in
+    echo)
+        ./maelstrom/maelstrom test -w echo --bin ./target/release/maelstrom --node-count 1 --time-limit 10
+        ;;
+    generate)
+        ./maelstrom/maelstrom test -w unique-ids --bin ./target/release/maelstrom --time-limit 30 --rate 1000 --node-count 3 --availability total --nemesis partition
+        ;;
+    broadcast)
+        ./maelstrom/maelstrom test -w broadcast --bin ./target/release/maelstrom --node-count 1 --time-limit 20 --rate 10
+        ;;
+    serve)
+        ./maelstrom/maelstrom serve
+        ;;
+    *)
+        echo "Usage: $0 {echo}"
+        exit 1
+esac
+
