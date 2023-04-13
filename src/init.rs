@@ -1,7 +1,7 @@
 use crate::message::{Req, Res, MessageType};
 use crate::node::Node;
 
-pub fn handle_init(node: &mut Node, req: &Req, res: &mut Res) {
+pub fn handle_init(node: &mut Node, req: &Req) {
     assert_eq!(req.body.r#type, MessageType::Init);
     node.id = req.body.node_id.clone().unwrap();
     node.peers = req.body.node_ids.clone().unwrap();
@@ -11,6 +11,7 @@ pub fn handle_init(node: &mut Node, req: &Req, res: &mut Res) {
     };
     node.generator.set(index_of, node.peers.len());
 
+    let mut res = Res::new(node.id.clone(), req.src.clone());
     res.src = node.id.clone();
     res.body.r#type = MessageType::InitOk;
     res.body.in_reply_to = req.body.msg_id;

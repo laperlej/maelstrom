@@ -1,4 +1,5 @@
 use serde::{Serialize, Deserialize};
+use std::collections::HashMap;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Message {
@@ -32,6 +33,7 @@ impl Message {
                 id: None,
                 message: None,
                 messages: None,
+                topology: None,
             },
         }
     }
@@ -77,6 +79,8 @@ pub struct Body {
     pub messages: Option<Vec<MessageId>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub message: Option<MessageId>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub topology: Option<HashMap<NodeId, Vec<NodeId>>>,
 }
 
 

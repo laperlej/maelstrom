@@ -1,8 +1,9 @@
 use crate::message::{Res, Req, MessageId, MessageType};
 use crate::node::Node;
 
-pub fn handle_generate(node: &mut Node, req: &Req, res: &mut Res) {
+pub fn handle_generate(node: &mut Node, req: &Req) {
     assert_eq!(req.body.r#type, MessageType::Generate);
+    let mut res = Res::new(node.id.clone(), req.src.clone());
     res.body.r#type = MessageType::GenerateOk;
     res.body.msg_id = Some(0);
     res.body.id = Some(node.generator.next());
